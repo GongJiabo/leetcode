@@ -15,12 +15,12 @@ solution：
 class Solution {
 public:
     vector<int> twoSum(vector<int>& nums, int target) {
-        std::unordered_map<int, int> record;             //record关联容器    
+        std::unordered_map<int, int> record;             //record关联容器      
         for (int i = 0; i != nums.size(); ++i) {         //遍历所有的值
             auto found = record.find(nums[i]);           //find: Get iterator to element 查找存在的情况下返回，否者为"野指针"
             if (found != record.end()) 
-                return {found->second, i};               //.first为键值 .second为映射值
-            record.emplace(target - nums[i], i);         //emplace: Construct and insert element 
+                return {found->second, i};               //.first为键值 .second为映射值  
+            record.emplace(target - nums[i], i);         //emplace: Construct and insert element   
         } 
         return {-1, -1};
     }
