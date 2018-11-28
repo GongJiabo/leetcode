@@ -30,4 +30,25 @@ void longestPalindrome(const string& s, int b, int e, int &start, int &last) {
         }
     }
 	
+ps：
+1）动态规划求解：
+https://www.cnblogs.com/coderJiebao/p/Algorithmofnotes30.html
+下面介绍动态规划的方法，使用动态规划可以达到最优的 O(n2) 复杂度。
+
+　　令 dp[i][j] 表示 S[i] 至 S[j] 所表示的子串是否是回文子串，是则为 1，不是则为 0。这样根据 S[i] 是否等于 S[j] ，可以把转移情况分为两类：
+
+ 若 S[i] == S[j]，那么只要 S[i+1] 至 S[j-1] 是回文子串，S[i] 至 S[j] 就是回文子串；如果S[i+1] 至 S[j-1] 不是回文子串，则 S[i] 至 S[j] 也不是回文子串。
+ 若 S[i] != S[j]，那么 S[i] 至 S[j] 一定不是回文子串。　　　　
+　　由此可以写出状态转移方程：
+
+　　　　　　　　　　dp[i][j]={dp[i+1][j−1],S[i]==S[j]0,S[i]!=S[j]
+
+　　边界：dp[i][i]=1，dp[i][i+1] = (S[i] == S[i+1]) ? 1 : 0。
+
+　　根据递推写法从边界出发的原理，注意到边界表示的是长度为 1 和 2 的子串，且每次转移时都对子串的长度减了 1，因此不妨考虑按子串的长度和子串的初始位置进行枚举，即第一遍将长度为 3 的子串的 dp 值全部求出，第二遍通过第一遍结果计算出长度为 4 的子串的 dp 值 ……
+
+2）Manacher法
+https://www.cnblogs.com/mini-coconut/p/9074315.html
+can't understand...如何得到转换后的Len数组？？
+	
 	
