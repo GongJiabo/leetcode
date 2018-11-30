@@ -1,79 +1,91 @@
-// Source : https://oj.leetcode.com/problems/reverse-integer/
+// Source : https://oj.leetcode.com/problems/string-to-integer-atoi/
 // Author : Hao Chen
 // Date   : 2014-06-18
 
 /********************************************************************************** 
 * 
-* Reverse digits of an integer.
+* Implement atoi to convert a string to an integer.
 * 
-* Example1: x =  123, return  321
-* Example2: x = -123, return -321
+* Hint: Carefully consider all possible input cases. If you want a challenge, 
+*       please do not see below and ask yourself what are the possible input cases.
+* 
+* Notes: 
+*   It is intended for this problem to be specified vaguely (ie, no given input specs). 
+*   You are responsible to gather all the input requirements up front. 
 * 
 * 
-* Have you thought about this?
+* Requirements for atoi:
 * 
-* Here are some good questions to ask before coding. Bonus points for you if you have already thought through this!
+* The function first discards as many whitespace characters as necessary until the first 
+* non-whitespace character is found. Then, starting from this character, takes an optional 
+* initial plus or minus sign followed by as many numerical digits as possible, and interprets 
+* them as a numerical value.
 * 
-* > If the integer's last digit is 0, what should the output be? ie, cases such as 10, 100.
+* The string can contain additional characters after those that form the integral number, 
+* which are ignored and have no effect on the behavior of this function.
 * 
-* > Did you notice that the reversed integer might overflow? Assume the input is a 32-bit integer, 
-*   then the reverse of 1000000003 overflows. How should you handle such cases?
+* If the first sequence of non-whitespace characters in str is not a valid integral number, 
+* or if no such sequence exists because either str is empty or it contains only whitespace 
+* characters, no conversion is performed.
 * 
-* > Throw an exception? Good, but what if throwing an exception is not an option? 
-*   You would then have to re-design the function (ie, add an extra parameter).
-* 
+* If no valid conversion could be performed, a zero value is returned. If the correct value 
+* is out of the range of representable values, INT_MAX (2147483647) or INT_MIN (-2147483648) 
+* is returned.
 *               
 **********************************************************************************/
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <ctype.h>
 
-//Why need the INT_MIN be defined like that?
-//Please take a look: 
-//  http://stackoverflow.com/questions/14695118/2147483648-0-returns-true-in-c
-#define INT_MAX     2147483647
-#define INT_MIN     (-INT_MAX - 1)
-int reverse(int x) {
-    int y=0;
-    int n;
-    while( x != 0){
-        n = x%10;
-        //Checking the over/underflow.
-        //Actually, it should be y>(INT_MAX-n)/10, but n/10 is 0, so omit it.
-        if (y > INT_MAX/10 || y < INT_MIN/10){
-             return 0;
-        }
-        y = y*10 + n;
-        x /= 10;
-    }
-    return y;
-}
+#define INT_MIN     (-2147483647 - 1)
+#define INT_MAX      2147483647
 
-#define TEST(n, e)  printf("%12d  =>  %-12d    %s!\n",  n, reverse(n),  e == reverse(n)?"passed":"failed")
-
-int main(int argc, char**argv)
-{
-    //basic cases
-    TEST(  123,  321);
-    TEST( -123, -321);
-    TEST( -100,   -1);
-    TEST( 1002, 2001);
-    //big integer
-    TEST( 1463847412,  2147483641);
-    TEST(-2147447412, -2147447412);
-    TEST( 2147447412,  2147447412);
-    //overflow
-    TEST( 1000000003, 0);
-    TEST( 2147483647, 0);
-    TEST(-2147483648, 0);
-    //customized cases
-    if (argc<2){
+int atoi(const char *str) {
+    if (str==NULL || *str=='\0'){
         return 0;
     }
-    printf("\n");
-    for (int i=1; i<argc; i++) {
-        int n = atoi(argv[i]); 
-        printf("%12d  =>  %-12d    %s!\n",  n, reverse(n), reverse(reverse(n))==n ? "passed":"failed");
+    
+    int ret=0;
+    
+    for(;isspace(*str); str++);
+    
+    bool neg=false;
+    if (*str=='-' || *str=='+') {
+        neg = (*str=='-') ;
+        str++;
     }
+    
+    for(; isdigit(*str); str++) {
+        int digit = (*str-'0');          //ASCI计算
+        if(neg){
+            if( -ret < (INT_MIN + digit)/10 ) {
+                return INT_MIN;
+            }
+        }else{
+            if( ret > (INT_MAX - digit) /10 ) {
+                return INT_MAX;
+            }
+        }
+
+        ret = 10*ret + digit ;
+    }
+    
+    return neg?-ret:ret;
+}
+
+
+int main()
+{
+    printf("\"%s\" = %d\n", "123", atoi("123"));
+    printf("\"%s\" = %d\n", "   123", atoi("    123"));
+    printf("\"%s\" = %d\n", "+123", atoi("+123"));
+    printf("\"%s\" = %d\n", " -123", atoi(" -123"));
+    printf("\"%s\" = %d\n", "123ABC", atoi("123ABC"));
+    printf("\"%s\" = %d\n", " abc123ABC", atoi(" abc123ABC"));
+    printf("\"%s\" = %d\n", "2147483647", atoi("2147483647"));
+    printf("\"%s\" = %d\n", "-2147483648", atoi("-2147483648"));
+    printf("\"%s\" = %d\n", "2147483648", atoi("2147483648"));
+    printf("\"%s\" = %d\n", "-2147483649", atoi("-2147483649"));
     return 0;
 }
