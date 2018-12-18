@@ -19,5 +19,5 @@
 
 思路：匹配括号，运用堆栈
 #include<stack>
-pop
-push
+pop()
+push()
