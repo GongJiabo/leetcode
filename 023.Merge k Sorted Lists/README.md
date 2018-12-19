@@ -33,4 +33,3 @@ lists.size() == 4 : 先两两合并，然后再将结果合并。
 然后核心的语句是：
 
 return mergeTwoLists(mergeKLists(beg, beg + std::distance(beg, end)/2), mergeKLists(beg + std::distance(beg, end)/2, end));
-提交，AC，离最快差了不过 4 ms.
