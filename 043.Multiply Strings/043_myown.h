@@ -8,7 +8,7 @@ string multiply(string num1, string num2)
 	vector<int> ret(n1 + n2, 0);	
 	for (int i = n2 - 1; i >= 0; i--)
 	{
-		p = n2 - 1 - i;
+		p = n2 - 1 - i;  // ret[p] 代表进位的数想
 		for (int j = n1 - 1; j >= 0; j--)
 		{
 			//进位

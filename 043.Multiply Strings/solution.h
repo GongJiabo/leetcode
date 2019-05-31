@@ -12,7 +12,7 @@ public:
                 ret[i+j+1] = sum%10 + '0';
                 carry = sum/10;
             }
-            ret[i] += carry;
+            ret[i] += carry;        //保存最高位？？
         }
         size_t pos = ret.find_first_not_of('0');
         if (pos != string::npos) return ret.substr(pos);
