@@ -1,3 +1,4 @@
+//暴力方法
 class Solution {
 public:
 int LessOne(int& a, int& b)
@@ -20,4 +21,22 @@ int maxArea(vector<int>& height)
 	}
 	return max;
 }
+};
+
+//双指针
+class Solution {
+public:
+    int maxArea(vector<int>& height) {
+        int l=0,r=height.size()-1;
+        int maxs=0, s;
+        while(l<r)
+        {
+            s=(r-l)*min(height[l],height[r]);
+            maxs=max(maxs,s);
+            if(height[l]<height[r])
+                l++;
+            else r--;
+        }        
+        return maxs;
+    }
 };
