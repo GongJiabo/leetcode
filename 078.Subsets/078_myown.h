@@ -26,3 +26,36 @@ public:
 	}
 
 };
+
+
+class Solution
+{
+private:
+	vector<vector<int>> res;
+public:
+	void findsub(vector<int>& nums, int index, vector<int>& c)
+	{
+		res.push_back(c);
+		//
+		if (index < nums.size())
+		{
+			for (int i = index; i < nums.size(); i++)
+			{
+				c.push_back(nums[i]);
+				findsub(nums, i + 1, c);
+				c.pop_back();
+			}
+		}
+		return;
+	}
+
+	vector<vector<int>> subsets(vector<int>& nums)
+	{
+		res.clear();
+		if (nums.size() <= 0) return res;
+		//
+		vector<int> c{};
+		findsub(nums, 0, c);
+		return res;
+	}
+};
