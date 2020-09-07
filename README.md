@@ -9,7 +9,7 @@ leetcode practice
 
 对比(真的是及其简洁):
 
-https://github.com/pezy/LeetCode/tree/master/000.%20Two%20Sum
+https://github.com/pezy/LeetCode
 
 
 有些pezy并没有解答，进一步参考了haoel的代码:
