@@ -1,11 +1,4 @@
-/**
- * Definition for singly-linked list.
- * struct ListNode {
- *     int val;
- *     ListNode *next;
- *     ListNode(int x) : val(x), next(NULL) {}
- * };
- */
+//1.
 class Solution {
 public:
 ListNode* removeNthFromEnd(ListNode* head, int n) 
@@ -30,4 +23,38 @@ ListNode* removeNthFromEnd(ListNode* head, int n)
 	p->next = p->next->next;
 	return head;
 }
+};
+
+
+//2.
+class Solution {
+public:
+    ListNode* removeNthFromEnd(ListNode* head, int n) {
+        assert(n>0);
+        //
+        ListNode* dummy = new ListNode(-1);
+        dummy->next=head;
+        ListNode* fast = dummy;
+        ListNode* slow = dummy;
+        //将slow指针滞后n+1个位置 
+        for(int i=0;i<n+1;i++)
+        {
+            assert(fast);
+            fast=fast->next;
+        }
+        //移动指针，使快指针指向链表末尾的空
+        //此时slow指针对应所需删除节点的前驱
+        while(fast!=NULL)
+        {
+            fast=fast->next;
+            slow=slow->next;
+        }
+        ListNode* temp=slow->next;
+        slow->next=temp->next;
+        delete temp;
+        //删除dummy
+        ListNode* ret=dummy->next;
+        delete dummy;
+        return ret;
+    }
 };

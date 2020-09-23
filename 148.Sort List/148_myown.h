@@ -71,7 +71,7 @@ public:
 		return res;
 	}
 
-	//剪短链表
+	//剪断链表
 	//返回链表最后一个元素的next，同时置为NULL
 	ListNode* cut(ListNode* head, int n)
 	{
