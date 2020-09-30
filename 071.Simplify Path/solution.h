@@ -1,12 +1,4 @@
-#include <string>
-using std::string;
-
-#include <vector>
-using std::vector;
-
-#include <sstream>
-using std::istringstream;
-
+//1. from pezy
 class Solution {
 public:
     string simplifyPath(string path) {
@@ -19,5 +11,29 @@ public:
         }
         for (auto str : stack) { ret += "/" + str; }
         return ret.empty() ? "/" : ret;
+    }
+};
+
+
+//2. 利用stringstream和getline分割字符串
+class Solution {
+public:
+    string simplifyPath(string path) {
+        stringstream is(path);
+        vector<string> strs;
+        string res = "", tmp = "";
+        while(getline(is, tmp, '/')) {
+            if(tmp == "" || tmp == ".")
+                continue;
+            else if(tmp == ".." && !strs.empty())
+                strs.pop_back();
+            else if(tmp != "..")
+                strs.push_back(tmp);
+        }
+        for(string str:strs) 
+            res +=  "/" + str;
+        if(res.empty())
+            return "/";
+        return res;
     }
 };
