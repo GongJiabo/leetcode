@@ -1,3 +1,4 @@
+//1. vector
 class Solution {
 public:
    	string simplifyPath(string path)
@@ -39,5 +40,43 @@ public:
                 res += temp2[i];
         }
 		return res;
+    }
+};
+
+//2. stack
+class Solution {
+public:
+    string simplifyPath(string path) 
+    {
+        stack<string> st;
+        //
+        string word = "";
+        for (int i = 0; i < path.size(); i++)
+        {
+            if (isalpha(path[i]))
+                word += path[i];
+            else if (path[i] == '/')
+            {
+                if (!word.empty())
+                    st.push(word);
+                word.clear();
+            }
+            else if (!st.empty() && path[i] == '.' && path[i + 1] == '.')
+            {
+                st.pop();
+                i++;
+            }
+        }
+        if (st.empty())
+            return "/";
+        string res;
+        while (!st.empty())
+        {
+            res.insert(0, st.top());
+            res.insert(0, "/");
+            st.pop();
+        }
+        
+        return res;
     }
 };

@@ -1,3 +1,4 @@
+//1.
 class Solution {
 public:
 bool isValid(string s) 
@@ -26,4 +27,37 @@ bool isValid(string s)
 	if (l_vc.size() == 0)  return true;
 	else return false;
 }
+};
+
+//2.
+class Solution {
+public:
+    bool isValid(string s) {
+        if (s.size() < 2) return false;
+        //
+        map<char, char> table;
+        table['('] = ')';
+        table['['] = ']';
+        table['{'] = '}';
+        //
+        stack<char> matched;
+        matched.push(s[0]);
+        //
+        for (int i = 1; i < s.size(); i++)
+        {
+            char c = s[i];
+            if (c == '(' || c == '[' || c == '{')
+                matched.push(c);
+            else
+            {
+                if (matched.empty() || table[matched.top()] != c)
+                    return false;
+                else if (table[matched.top()] == c)
+                    matched.pop();
+            }
+        }
+        if (!matched.empty()) 
+            return false;
+        return true;
+    }
 };
